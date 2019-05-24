@@ -3,6 +3,7 @@ import numpy as np
 import opytimizer.math.random as r
 import opytimizer.utils.history as h
 import opytimizer.utils.logging as l
+import tqdm
 from opytimizer.core.optimizer import Optimizer
 
 logger = l.get_logger(__name__)
@@ -165,8 +166,9 @@ class BHA(Optimizer):
         history = h.History()
 
         # These are the number of iterations to converge
-        for t in range(space.n_iterations):
-            logger.info(f'Iteration {t+1}/{space.n_iterations}')
+        iterator = tqdm.trange(space.n_iterations)
+        for t in iterator:
+            # logger.info(f'Iteration {t+1}/{space.n_iterations}')
 
             # Updating agents
             self._update(space.agents, space.best_agent,
@@ -181,7 +183,10 @@ class BHA(Optimizer):
             # Every iteration, we need to dump the current space agents
             history.dump(space.agents, space.best_agent)
 
-            logger.info(f'Fitness: {space.best_agent.fit}')
-            logger.info(f'Position: {space.best_agent.position}')
+            iterator.set_postfix({
+                'Fitness': space.best_agent.fit
+            })
+            # logger.info(f'Fitness: {space.best_agent.fit}')
+            # logger.info(f'Position: {space.best_agent.position}')
 
         return history

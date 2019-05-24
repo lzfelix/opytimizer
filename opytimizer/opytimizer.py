@@ -114,14 +114,15 @@ class Opytimizer:
 
         logger.info('Optimization task ended.')
         logger.info(f'It took {(end - start) % 60} seconds.')
+        return h
 
         # Checking if history object should be saved or not
-        if history:
-            # Composes the identifier string to save
-            file_name = f'models/{self.optimizer.algorithm}-i{self.space.n_iterations}-a{self.space.n_agents}' \
-                + f'-v{self.space.n_variables}-d{self.space.n_dimensions}-fit{h.best_agent[-1][1]:.4f}.pkl'
+        # if history:
+        #     # Composes the identifier string to save
+        #     file_name = f'models/{self.optimizer.algorithm}-i{self.space.n_iterations}-a{self.space.n_agents}' \
+        #         + f'-v{self.space.n_variables}-d{self.space.n_dimensions}-fit{h.best_agent[-1][1]:.4f}.pkl'
 
-            # Actually saves the history object
-            h.save(file_name)
+        #     # Actually saves the history object
+        #     h.save(file_name)
 
-            logger.info(f'Model saved to: {file_name}.')
+        #     logger.info(f'Model saved to: {file_name}.')
